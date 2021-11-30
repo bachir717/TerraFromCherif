@@ -1,4 +1,4 @@
-Quelques notion importante 
+Quelques notions importantes 
 
 #Permet de déclarer un group de sécurité pour EC2, sans quoi il ne sera pas possible d'y accéder
   resource "aws_security_group" "my_security-group" {
@@ -6,6 +6,8 @@ Quelques notion importante
   name        = "${var.author}-security-group"
   description = "Allow http and https inbound traffic"
   #vpc_id      = aws_vpc.main.id
+
+
 
 
 
@@ -38,6 +40,10 @@ Quelques notion importante
     ipv6_cidr_blocks = ["::/0"]
   }
 
+
+
+
+
  #Sert à définir une règle de sortie: Il est possible de sortir vers n'importe où, tous protocoles
    egress {
     from_port        = 0
@@ -48,7 +54,11 @@ Quelques notion importante
   }
 
 
+
+
+
 commandes 
+
 - terraform apply
 - terraform plan
 - terraform destroy
