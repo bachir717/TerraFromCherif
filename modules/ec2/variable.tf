@@ -1,6 +1,6 @@
 variable "author" {
   type    = string
-  default = "frazer"
+  default = "cherif"
 }
 
 variable "instance_type" {
@@ -10,10 +10,10 @@ variable "instance_type" {
 
 variable "ssh_key" {
   type    = string
-  default = "devops-frazer"
+  default = "dev-cherif"
 }
 
-variable "sg_name" {
+variable "security-group_name" {
   type    = string
   default = "NULL"
 }

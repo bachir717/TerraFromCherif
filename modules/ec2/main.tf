@@ -8,12 +8,12 @@ data "aws_ami" "my_ubuntu_ami" {
   }
 }
 
-resource "aws_instance" "frazer-ec2" {
+resource "aws_instance" "cherif-ec2" {
   ami             = data.aws_ami.my_ubuntu_ami.id
   instance_type   = var.instance_type
   key_name        = var.ssh_key
   availability_zone = "${var.az}"
-  security_groups = ["${var.sg_name}"]
+  security_groups = ["${var.security-group_name}"]
   tags = {
     Name = "${var.author}-ec2"
   }
@@ -23,7 +23,7 @@ resource "aws_instance" "frazer-ec2" {
   }
 
   provisioner "local-exec" {
-    command = " echo PUBLIC IP: ${var.public_ip} ; ID: ${aws_instance.frazer-ec2.id} ; AZ: ${aws_instance.frazer-ec2.availability_zone}; >> infos_ec2.txt"
+    command = " echo PUBLIC IP: ${var.public_ip} ; ID: ${aws_instance.cherif-ec2.id} ; AZ: ${aws_instance.cherif-ec2.availability_zone}; >> infos_ec2.txt"
   }
 
   provisioner "remote-exec" {
@@ -36,7 +36,7 @@ resource "aws_instance" "frazer-ec2" {
     connection {
       type        = "ssh"
       user        = "${var.user}"
-      private_key = file("C:/Files/Docs Perso/DevOps/AWS/.aws/${var.ssh_key}.pem")
+      private_key = file("./${var.ssh_key}.pem")
       host        = "${self.public_ip}"
     }
   }
