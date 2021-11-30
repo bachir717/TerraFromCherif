@@ -1,52 +1,43 @@
 provider "aws" {
   region                  = "us-east-1"
-  shared_credentials_file = "C:/Files/Docs Perso/DevOps/AWS/.aws/credentials"
+  shared_credentials_file = "C:/Documents/TerraForm/Projet/DevOps/AWS/.aws/credentials"
 }
 
-# terraform {
-#   backend "s3" {
-#     bucket                  = "terraform-backend-frazer"
-#     key                     = "frazer-dev.tfstate"
-#     region                  = "us-east-1"
-#     shared_credentials_file = "C:/Files/Docs Perso/DevOps/AWS/.aws/credentials"
-#   }
-# }
-
-#Appel du module de création du sg
-module "sg" {
-  source        = "../modules/sg"
+#Appel du module  security-goup
+module "security-goup" {
+  source        = "../modules/security-goup"
   author = "app"
 
 }
 
-#Appel module de création du volume
+#Appel module de création du volume ebs
 module "ebs" {
   source        = "../modules/ebs"
   dd_size = 5
   author = "app"
 }
 
-# Appel du module de création de l'adresse ip pulique
-module "eip" {
-  source        = "../modules/eip"
+# Appel du module  ip pulique
+module "ip_publique" {
+  source        = "../modules/ip_publique"
 }
 
-# Appel du module de création de ec2
+# Appel du module  ec2
 module "ec2" {
   source        = "../modules/ec2"
   author        = "app"
   instance_type = "t2.micro"
-  sg_name= "${module.sg.out_sg_name}"
-  public_ip = "${module.eip.out_eip_ip}"
+  sg_name= "${module.security-goup.out_security-goup_name}"
+  public_ip = "${module.ip_publique.out_ip_publique_ip}"
   user = "ubuntu"
 }
 
-#//////////////////////////////////////////////////
-#Creation des associations nécessaires entre nos ressources
 
-resource "aws_eip_association" "eip_assoc" {
+#creer les associations  entre les  ressources
+
+resource "aws_eip_association" "ip_publique_assoc" {
   instance_id = module.ec2.out_instance_id
-  allocation_id = module.eip.out_eip_id
+  allocation_id = module.ip_publique.out_ip_publique_id
 }
 
 resource "aws_volume_attachment" "ebs_att" {

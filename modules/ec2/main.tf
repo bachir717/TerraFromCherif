@@ -36,7 +36,7 @@ resource "aws_instance" "cherif-ec2" {
     connection {
       type        = "ssh"
       user        = "${var.user}"
-      private_key = file("./${var.ssh_key}.pem")
+      private_key = file("C:/Documents/TerraForm/Projet/DevOps/AWS/.aws/${var.ssh_key}.pem")
       host        = "${self.public_ip}"
     }
   }

@@ -1,6 +1,6 @@
 variable "author" {
   type    = string
-  default = "frazer"
+  default = "cherif"
 }
 
 variable "dd_size" {
